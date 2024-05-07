@@ -1,341 +1,152 @@
-from tkinter import *
+# Importing the library
+from future.moves import tkinter
 import math
-import tkinter.messagebox
- 
-root = Tk()
+
+
+# To provide functionalities
+def click(val):
+    e = entry.get()  # getting the value
+    ans = " "
+
+    try:
+        # To clear the last inserted text
+        if val == "C":
+            e = e[0:len(e) - 1]  # deleting the last entered value
+            entry.delete(0, "end")
+            entry.insert(0, e)
+            return
+
+        # To delete everything
+        elif val == "CE":
+            entry.delete(0, "end")
+
+        # Square root
+        elif val == "√":
+            ans = math.sqrt(eval(e))
+
+        # pi value
+        elif val == "π":
+            ans = math.pi
+
+        # cos value
+        elif val == "cosθ":
+            ans = math.cos(math.radians(eval(e)))
+
+        # sin value
+        elif val == "sinθ":
+            ans = math.sin(math.radians(eval(e)))
+
+        # tan Value
+        elif val == "tanθ":
+            ans = math.tan(math.radians(eval(e)))
+
+        # 2π value
+        elif val == "2π":
+            ans = 2 * math.pi
+
+        # cosh value
+        elif val == "cosh":
+            ans = math.cosh(eval(e))
+
+        # sinh value
+        elif val == "sinh":
+            ans = math.sinh(eval(e))
+
+        # tanh value
+        elif val == "tanh":
+            ans = math.tanh(eval(e))
+
+        # cube root value
+        elif val == chr(8731):
+            ans = eval(e) ** (1 / 3)
+
+        # x to the power y
+        elif val == "x\u02b8":
+            entry.insert("end", "**")
+            return
+
+        # cube value
+        elif val == "x\u00B3":
+            ans = eval(e) ** 3
+
+        # square value
+        elif val == "x\u00B2":
+            ans = eval(e) ** 2
+
+        # ln value
+        elif val == "ln":
+            ans = math.log2(eval(e))
+
+        # deg value
+        elif val == "deg":
+            ans = math.degrees(eval(e))
+
+        # radian value
+        elif val == "rad":
+            ans = math.radians(eval(e))
+
+        # e value
+        elif val == "e":
+            ans = math.e
+
+        # log10 value
+        elif val == "log10":
+            ans = math.log10(eval(e))
+
+        # factorial value
+        elif val == "x!":
+            ans = math.factorial(eval(e))
+
+        # division operator
+        elif val == chr(247):
+            entry.insert("end", "/")
+            return
+
+        elif val == "=":
+            ans = eval(e)
+
+        else:
+            entry.insert("end", val)
+            return
+
+        entry.delete(0, "end")
+        entry.insert(0, ans)
+
+    except SyntaxError:
+        pass
+
+
+# Created the object
+root = tkinter.Tk()
+
+# Setting the title and geometry
 root.title("Scientific Calculator")
-root.configure(background = 'green')
-root.resizable(width = True, height = True)
-root.geometry("944x568+0+0")
-calc = Frame(root)
-calc.grid()
- 
-class Calc():
-    def __init__(self):
-        self.total = 0
-        self.current = ''
-        self.input_value = True
-        self.check_sum = False
-        self.op = ''
-        self.result = False
- 
-    def numberEnter(self, num):
-        self.result=False
-        firstnum = txtDisplay.get()
-        secondnum = str(num)
-        if self.input_value:
-            self.current = secondnum
-            self.input_value = False
-        else:
-            if secondnum == '.':
-                if secondnum in firstnum:
-                    return
-            self.current = firstnum+secondnum
-        self.display(self.current)
- 
-    def sum_of_total(self):
-        self.result = True
-        self.current = float(self.current)
-        if self.check_sum == True:
-            self.valid_function()
-        else:
-            self.total=float(txtDisplay.get())
- 
-    def display(self, value):
-        txtDisplay.delete(0, END)
-        txtDisplay.insert(0, value)
- 
-    def valid_function(self):
-        if self.op == "add":
-            self.total += self.current
-        if self.op == "sub":
-            self.total -= self.current
-        if self.op == "multi":
-            self.total *= self.current
-        if self.op == "divide":
-            self.total /= self.current
-        if self.op == "mod":
-            self.total %= self.current
-        self.input_value = True
-        self.check_sum = False
-        self.display(self.total)
- 
-    def operation(self, op):
-        self.current = float(self.current)
-        if self.check_sum:
-            self.valid_function()
-        elif not self.result:
-            self.total = self.current
-            self.input_value = True
-        self.check_sum = True
-        self.op = op
-        self.result = False
- 
-    def Clear_Entry(self):
-        self.result = False
-        self.current = "0"
-        self.display(0)
-        self.input_value = True
-        
-    def All_Clear_Entry(self):
-        self.Clear_Entry()
-        self.total=0
-        
-    def pi(self):
-        self.result = False
-        self.current = math.pi
-        self.display(self.current)
- 
-    def tau(self):
-        self.result = False
-        self.current = math.tau
-        self.display(self.current)
- 
-    def e(self):
-        self.result = False
-        self.current = math.e
-        self.display(self.current)
- 
-    def mathPM(self):
-        self.result = False
-        self.current = -(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def squared(self):
-        self.result = False
-        self.current = math.sqrt(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def cos(self):
-        self.result = False
-        self.current = math.cos(math.radians(float(txtDisplay.get())))
-        self.display(self.current)
- 
-    def cosh(self):
-        self.result = False
-        self.current = math.cosh(math.radians(float(txtDisplay.get())))
-        self.display(self.current)
- 
-    def tan(self):
-        self.result = False
-        self.current = math.tan(math.radians(float(txtDisplay.get())))
-        self.display(self.current)
- 
-    def sinh(self):
-        self.result = False
-        self.current = math.sinh(math.radians(float(txtDisplay.get())))
-        self.display(self.current)
- 
-    def sin(self):
-        self.result = False
-        self.current = math.sin(math.radians(float(txtDisplay.get())))
-        self.display(self.current)
- 
-    def log(self):
-        self.result = False
-        self.current = math.log(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def exp(self):
-        self.result = False
-        self.current = math.exp(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def acosh(self):
-        self.result = False
-        self.current = math.acosh(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def asinh(self):
-        self.result = False
-        self.current = math.asinh(float(txtDisplay.get()))
-        self.display(self.current)
+root.geometry("680x486+100+100")
 
-    def atanh(self):
-        self.result = False
-        self.current = math.atanh(math.radians(float(txtDisplay.get())))
-        self.display(self.current)
- 
-    def floor(self):
-        self.result = False
-        self.current = math.floor(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def radians(self):
-        self.result = False
-        self.current = math.radians(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def degrees(self):
-        self.result = False
-        self.current = math.degrees(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def ceil(self):
-        self.result = False
-        self.current = math.ceil(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def abs(self):
-        self.result = False
-        self.current = math.abs(float(txtDisplay.get()))
-        self.display(self.current)
- 
-    def pow(self):
-        self.result = False
-        self.current = math.pow(float(txtDisplay.get()))
-        self.display(self.current)
-
-added_value = Calc()
-
-txtDisplay = Entry(calc, font = ('Helvetica',20,'bold italic'), bg = 'white', fg = 'grey', bd = 30, width = 28, justify = RIGHT)
-txtDisplay.grid(row = 0, column = 0, columnspan = 4,)
-txtDisplay.insert(0,"0")
-
-numberpadd = "789456123"
-i = 0
-btn = []
-for j in range(2,5):
-    for k in  range(3):
-        btn.append(Button(calc, width = 6, height = 2, bg = 'white',fg = 'grey', font = ('Helvetica',20,'bold italic'), bd = 4, text = numberpadd[i]))
-        btn[i].grid(row = j, column = k, pady = 1)
-        btn[i]["command"] = lambda x = numberpadd[i]:added_value.numberEnter(x)
-        i += 1
-        
-btnClear = Button(calc, text = chr(67), width = 6, height = 2, bg = 'white',
-                  font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = added_value.Clear_Entry).grid(row = 1, column = 0, pady = 1)
-
-btnAllClear = Button(calc, text = chr(67)+chr(69), width = 6, height = 2, bg = 'white',
-                  font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = added_value.All_Clear_Entry).grid(row = 1, column = 1, pady = 1)
-
-btnsq = Button(calc, text="\u221A", width=6,height=2, bg='white',
-               font=('Helvetica', 20, 'bold italic'),
-               bd=4, command=added_value.squared).grid(row=1, column=2, pady=1)
-
-btnAdd = Button(calc, text = "+", width = 6, height = 2, bg = 'white',
-                  font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = lambda:added_value.operation("add")).grid(row = 1, column = 3, pady = 1)
-
-btnSub = Button(calc, text = "-", width = 6, height = 2, bg = 'white',
-                  font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = lambda:added_value.operation("sub")).grid(row = 2, column = 3, pady = 1)
-
-btnMul = Button(calc, text="x", width=6, height=2,bg='white',
-                font=('Helvetica', 20, 'bold italic'),bd=4, 
-                command=lambda: added_value.operation("multi")).grid(row=3, column=3, pady=1)
-
-btnDiv = Button(calc, text="/", width=6,height=2, bg='white',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=lambda: added_value.operation("divide")).grid(row=4, column=3, pady=1)
-
-btnZero = Button(calc, text = "0", width = 6, height = 2, bg = 'white',
-                  fg = 'grey', font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = lambda:added_value.numberEnter("0")).grid(row = 5, column = 0, pady = 1)
-
-btnDot = Button(calc, text = ".", width = 6, height = 2, bg = 'white',
-                  font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = lambda:added_value.numberEnter(".")).grid(row = 5, column = 1, pady = 1)
-
-btnPM = Button(calc, text=chr(177), width=6,height=2, bg='white',
-               font=('Helvetica', 20, 'bold italic'),
-               bd=4, command=added_value.mathPM).grid(row=5, column=2, pady=1)
- 
-btnEquals = Button(calc, text = "=", width = 6, height = 2, bg = 'white',
-                  font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = added_value.sum_of_total).grid(row = 5, column = 3, pady = 1)
-
-#Row 1
-btnPi = Button(calc, text="pi", width=6,height=2, bg='white', fg='black',    #####
-               font=('Helvetica', 20, 'bold italic'),
-               bd=4, command=added_value.pi).grid(row=1, column=4, pady=1)
-
-btnsin = Button(calc, text="sin", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.sin).grid(row=1, column=5, pady=1)
-
-btnCos = Button(calc, text="Cos", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.cos).grid(row=1, column=6, pady=1)
- 
-btntan = Button(calc, text="tan", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.tan).grid(row=1, column=7, pady=1)
-
-#row 2
-btn2Pi = Button(calc, text="2pi", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.tau).grid(row=2, column=4, pady=1)
-
-btnasinh = Button(calc, text="asinh", width=6, height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.asinh).grid(row=2, column=5, pady=1)
-
-btnacosh = Button(calc, text="acosh", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.acosh).grid(row=2, column=6, pady=1)
-
-btnatanh = Button(calc, text="atanh", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.atanh).grid(row=2, column=7, pady=1)
-
-#Row 3
-btnlog = Button(calc, text="log", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.log).grid(row=3, column=4, pady=1)
- 
-btnExp = Button(calc, text="exp", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.exp).grid(row=3, column=5, pady=1)
- 
-btnMod = Button(calc, text="Mod", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=lambda: added_value.operation("mod")).grid(row=3, column=6, pady=1)
- 
-btnE = Button(calc, text="e", width=6,height=2, bg='white', fg='black',
-              font=('Helvetica', 20, 'bold italic'),
-              bd=4, command=added_value.e).grid(row=3, column=7, pady=1)
-
-#Row 4
-btnabs = Button(calc, text="abs", width=6,height=2, bg='white', fg='black',
-                  font=('Helvetica', 20, 'bold italic'),
-                  bd=4, command=added_value.abs).grid(row=4, column=4, pady=1)
-
-btnpow = Button(calc, text = "pow", width = 6, height = 2, bg = 'white',
-                  fg = 'black', font = ('Helvetica',20,'bold italic'), bd = 4, 
-                  command = lambda:added_value.pow).grid(row = 4, column = 5, pady = 1) 
-
-btnfloor = Button(calc, text="floor", width=6,height=2, bg='white', fg='black',
-                  font=('Helvetica', 20, 'bold italic'),
-                  bd=4, command=added_value.floor).grid(row=4, column=6, pady=1)
-
-btnrcosh = Button(calc, text="cosh", width=6,height=2, bg='white', fg='black',
-                  font=('Helvetica', 20, 'bold italic'),
-                  bd=4, command=added_value.cosh).grid(row=4, column=7, pady=1)
-
-#Row 5
-btnceil = Button(calc, text="ceil", width=6,height=2, bg='white', fg='black',
-                 font=('Helvetica', 20, 'bold italic'),
-                 bd=4, command=added_value.ceil).grid(row=5, column=4, pady=1)
- 
-btndeg = Button(calc, text="deg", width=6,height=2, bg='white', fg='black',
-                font=('Helvetica', 20, 'bold italic'),
-                bd=4, command=added_value.degrees).grid(row=5, column=5, pady=1)
-
-btnradians = Button(calc, text="radians", width=6,height=2, bg='white', fg='black',
-                  font=('Helvetica', 20, 'bold italic'),
-                  bd=4, command=added_value.radians).grid(row=5, column=6, pady=1)
- 
-btnsinh = Button(calc, text="sinh", width=6,height=2, bg='white', fg='black',
-                  font=('Helvetica', 20, 'bold italic'),
-                  bd=4, command=added_value.sinh).grid(row=5, column=7, pady=1) 
+# Setting the background color
+root.config(bg="black")
 
 
+# Entry field
+entry = tkinter.Entry(root, font=("arial", 20, "bold"), bg="black", fg="white", bd=10, width=30)
+entry.grid(row=0, column=0, columnspan=8)
 
-lblDisplay = Label(calc, text = "Scientific Calculator", font = ('Helvetica', 30, 'bold'), bg = 'black', fg = 'white', justify = CENTER)
-lblDisplay.grid(row = 0, column = 4, columnspan = 4)
- 
-Calc()
+# buttons list
+button_list = ["C", "CE", "√", "+", "π", "cosθ", "tanθ", "sinθ", "1", "2", "3", "-", "2π", "cosh", "tanh", "sinh",
+               "4", "5", "6", "*", chr(8731), "x\u02b8", "x\u00B3", "x\u00B2", "7", "8", "9", chr(247), "ln", "deg",
+               "rad", "e", "0", ".", "%", "=", "log10", "(", ")", "x!"]
+r = 1
+c = 0
+# Loop to get the buttons on window
+for i in button_list:
+    # Buttons
+    button = tkinter.Button(root, width=5, height=2, bd=2, text=i, bg="black", fg="white",
+                            font=("arial", 18, "bold"), command=lambda button=i: click(button))
+    button.grid(row=r, column=c, pady=1)
+    c += 1
+    if c > 7:
+        r += 1
+        c = 0
 
+# Makes window on loop
 root.mainloop()
