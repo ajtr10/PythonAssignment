@@ -1,5 +1,4 @@
-# Importing the library
-from future.moves import tkinter
+import tkinter
 import math
 
 
